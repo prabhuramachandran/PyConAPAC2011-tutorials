@@ -1,6 +1,4 @@
 # use glob syntax.
-syntax: glob
-
 *.aux
 *.dvi
 *.log
