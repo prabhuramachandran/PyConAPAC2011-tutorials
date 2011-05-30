@@ -74,13 +74,17 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Title page
-\title[Matrices \& Curve Fitting]{Python for Science and Engg: Matrices
-\& Least Squares Fit}
+\title[More on numpy arrays]{Introductory Scientific Computing with
+Python}
+\subtitle{More on numpy arrays}
 
-\author[FOSSEE] {FOSSEE}
+\author[Prabhu] {FOSSEE}
 
-\institute[IIT Bombay] {Department of Aerospace Engineering\\IIT Bombay}
-\date[] {SciPy 2010, Introductory tutorials\\Day 1, Session 4}
+\institute[FOSSEE -- IITB] {Department of Aerospace Engineering\\IIT Bombay}
+\date[] {PyCon Asia-Pacific,\\
+Singapore\\
+June 9, 2011
+}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %\pgfdeclareimage[height=0.75cm]{iitmlogo}{iitmlogo}
@@ -530,26 +534,12 @@ This is what our intention is.
 \frametitle{Getting $L$ and $T^2$}
 %If you \alert{closed} IPython after session 2
 \begin{lstlisting}
-In []: L = []
-In []: t = []
-In []: for line in open('pendulum.txt'):
-  ....     point = line.split()
-  ....     L.append(float(point[0]))
-  ....     t.append(float(point[1]))
-  ....
-  ....
+In []: L, t = loadtxt('pendulum.txt', 
+  ...:                unpack=True)
+In []: tsq = t*t
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{Getting $L$ and $T^2$ \dots}
-\begin{lstlisting}
-In []: L = array(L)
-In []: t = array(t)
-\end{lstlisting}
-\alert{\typ{In []: tsq = t*t}}
-\end{frame}
- 
 \begin{frame}[fragile]
 \frametitle{Generating $A$}
 \begin{lstlisting}
@@ -603,24 +593,115 @@ In []: plot(L, tsq, 'o')
 \end{figure}
 \end{frame}
 
+\section{Random numbers}
+
+\begin{frame}[fragile]
+    \frametitle{\typ{numpy.random}}
+    \begin{itemize}
+        \item Easy random number generation
+    \end{itemize}
+    \begin{lstlisting}
+In []: random?
+    \end{lstlisting}
+    Or:
+    \begin{lstlisting}
+In []: import numpy
+In []: numpy.random
+    \end{lstlisting}
+\begin{itemize}
+    \item \typ{random.random}: produces uniform deviates in $[0, 1)$
+    \item \typ{random.normal}: draws random samples from a Gaussian
+        distribution
+    \item Useful to create a random matrix of any shape
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Using the \typ{random} module}
+\begin{lstlisting}
+In []: x = random.random(size=1000)
+In []: y = random.random(size=1000)
+In []: scatter(x, y) # Scatter plot it.
+
+In []: x,y = random.normal(size=(2,1000))
+In []: clf()
+In []: scatter(x, y)
+\end{lstlisting}
+Note that \typ{size} can be a tuple.
+
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Using the \typ{random} module}
+\begin{lstlisting}
+In []: img = random.random(
+  .                    size=(200, 200))
+In []: clf()
+In []: imshow(img)
+\end{lstlisting}
+
+\end{frame}
+
+
+\section{Record arrays}
+
+\begin{frame}[fragile]
+    \frametitle{Record arrays}
+    \begin{itemize}
+        \item Numpy arrays
+        \item Allow field access 
+    \end{itemize}
+    \begin{lstlisting}
+In []: typ = [('id', int), ('x', float)]
+In []: rec = numpy.zeros(10, dtype=typ)
+In []: rec['id'] = range(10)
+In []: rec['x'] = random.random(size=10)
+    \end{lstlisting}
+    \begin{itemize}
+        \item Data type can be any valid numpy dtype
+        \item Very convenient
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{\typ{csv2rec}}
+    \begin{itemize}
+        \item CSV file $\rightarrow$ Record array
+        \item Very convenient and powerful
+        \item Automatic naming
+        \item Handles missing data
+        \item Handles different delimiters
+    \end{itemize}
+    \begin{lstlisting}
+In []: csv2rec?
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{\typ{csv2rec} example data}
+    \begin{itemize}
+        \item Describe the data here
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{\typ{csv2rec} example}
+    \begin{lstlisting}
+In []: data = csv2rec('data.csv')
+In []: scatter(data['x'], data['y'], 
+  ...:         c=data['value'])
+    \end{lstlisting}
+\end{frame}
+
 \section{Summary}
 \begin{frame}
   \frametitle{What did we learn?}
   \begin{itemize}
   \item Matrices
-    \begin{itemize}
-      \item Initializing
-      \item Accessing elements
-      \item Slicing and Striding
-      \item Transpose
-      \item Addition
-      \item Multiplication
-      \item Inverse of a matrix
-      \item Determinant
-      \item Eigenvalues and Eigen vector
-      \item Singular Value Decomposition
-    \end{itemize}
-  \item Least Square Curve fitting
+  \item Least Squares
+  \item Random numbers
+  \item Record arrays
+  \item \typ{csv2rec}
   \end{itemize}
 \end{frame}
 
