@@ -169,7 +169,9 @@ In []: mlab.clf()
 In []: mlab.test_surf()
 In []: mlab.test_surf??
     \end{lstlisting}
+Explore the UI.
 \end{frame}
+
 
 \begin{frame}[fragile]
     \frametitle{\typ{mlab} plotting functions}
@@ -187,6 +189,37 @@ In []: x, y, z = sin(u), cos(u), sin(t)
     \end{lstlisting}
     \emphbar{\PythonCode{In []: mlab.points3d(x, y, z)}}
 \end{frame}
+
+\begin{frame}[plain, fragile]
+    \frametitle{Changing how things look}
+
+    \begin{block}{Clearing the view}
+    \PythonCode{>>> mlab.clf()}
+    \end{block}
+
+    \pause
+
+    \begin{block}{IPython is your friend!}
+    \PythonCode{>>> mlab.points3d?}
+
+    \begin{itemize}
+
+        \item Extra argument: Scalars
+
+        \item Keyword arguments
+
+        \item UI
+    \end{itemize}
+    \end{block}
+\pause
+    \begin{lstlisting}
+In []: mlab.points3d(x, y, z, t, 
+                     scale_mode='none')
+    \end{lstlisting}
+
+\end{frame}
+
+
 
 \begin{frame}[fragile]
   \begin{columns}
@@ -206,7 +239,7 @@ In []: x, y, z = sin(u), cos(u), sin(t)
         \column{0.25\textwidth}
         \myemph{\Large 2D data}
         \column{0.5\textwidth}
-        \pgfimage[width=2in]{MEDIA/m2/mlab/surf_ex}
+        \pgfimage[width=2in]{../MEDIA/m2/mlab/surf_ex}
     \end{columns}            
     \begin{lstlisting}
 In []: x, y = mgrid[-3:3:100j,-3:3:100j]
@@ -219,6 +252,49 @@ In []: z = sin(x*x + y*y)
 
 \end{frame}
 
+
+\begin{frame}[plain, fragile]
+
+        \myemph{\Large 3D data}
+    \vspace*{0.25in}
+
+    \pgfimage[width=1.5in]{../MEDIA/m2/mlab/contour3d}\\
+    
+\begin{lstlisting}
+In []: x, y, z = ogrid[-5:5:64j, 
+  ...:                 -5:5:64j, 
+  ...:                 -5:5:64j]
+In []: mlab.contour3d(x*x*0.5 + y*y + 
+                   z*z*2)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain]
+    {Other utility functions}
+    \begin{itemize}
+        \item \PythonCode{gcf}: get current figure
+            \pause
+        \item \PythonCode{savefig}, \PythonCode{figure}
+            \pause
+        \item \PythonCode{axes}, \PythonCode{outline}
+            \pause
+        \item \PythonCode{title}, \PythonCode{xlabel, ylabel, zlabel}
+            \pause
+        \item \PythonCode{colorbar}, \PythonCode{scalarbar},
+            \PythonCode{vectorbar}
+            \pause
+        \item \PythonCode{show}: Standalone mlab scripts
+            \pause
+        \item Others, see UG
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    {Exploring the documentation}
+    \begin{center}
+    \pgfimage[width=4in]{../MEDIA/m2/m2_ug_doc}
+    \end{center}
+\end{frame}
 
 
 
