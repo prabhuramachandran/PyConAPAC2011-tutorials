@@ -73,12 +73,17 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Title page
-\title[Solving Equations \& ODEs]{Python for Science and Engg:\\Solving Equations \& ODEs}
+\title[Mayavi and SciPy]{Introductory Scientific Computing with
+Python}
+\subtitle{Mayavi and SciPy}
 
-\author[FOSSEE] {FOSSEE}
+\author[Prabhu] {FOSSEE}
 
-\institute[IIT Bombay] {Department of Aerospace Engineering\\IIT Bombay}
-\date[] {SciPy 2010, Introductory tutorials\\Day 1, Session 6}
+\institute[FOSSEE -- IITB] {Department of Aerospace Engineering\\IIT Bombay}
+\date[] {PyCon Asia-Pacific,\\
+Singapore\\
+June 9, 2011
+}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %\pgfdeclareimage[height=0.75cm]{iitmlogo}{iitmlogo}
@@ -122,6 +127,28 @@
 %%   \tableofcontents
 %%   % You might wish to add the option [pausesections]
 %% \end{frame}
+
+\section{Basic Mayavi: \typ{mlab}}
+
+\begin{frame}[fragile]
+\frametitle{Basic 3D visualization}
+\begin{itemize}
+    \item Simple one liners for 3D visualization
+\end{itemize}
+  \begin{lstlisting}
+$ ipython --pylab --wthread
+# or
+$ ipython --pylab --q4thread
+  \end{lstlisting}
+\begin{itemize}
+    \item Must import mlab.
+\end{itemize}
+\begin{lstlisting}
+In []: from enthought.mayavi import mlab
+\end{lstlisting}
+Ready to go!
+\end{frame}
+
 
 \section{Solving linear equations}
 
@@ -516,6 +543,7 @@ Only scratched the surface here \dots
 \begin{frame}
   \frametitle{Things we have learned}
   \begin{itemize}
+      \item Simple 3D plotting
   \item Solving Linear Equations
   \item Defining Functions
   \item Finding Roots
