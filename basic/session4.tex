@@ -23,6 +23,7 @@
 \usepackage[latin1]{inputenc}
 %\usepackage{times}
 \usepackage[T1]{fontenc}
+\usepackage{pgf}
 
 % Taken from Fernando's slides.
 \usepackage{ae,aecompl}
@@ -48,6 +49,10 @@
       {#1}
  \end{beamercolorbox}
 }
+
+\newcommand{\myemph}[1]{\structure{\emph{#1}}}
+\newcommand{\PythonCode}[1]{\lstinline{#1}}
+
 \newcounter{time}
 \setcounter{time}{0}
 \newcommand{\inctime}[1]{\addtocounter{time}{#1}{\tiny \thetime\ m}}
@@ -149,8 +154,75 @@ In []: from enthought.mayavi import mlab
 Ready to go!
 \end{frame}
 
+\begin{frame}[fragile]
+    \frametitle{Simple examples}
 
-\section{Solving linear equations}
+    \myemph{\Large Try these}
+
+    \begin{lstlisting}
+In []: mlab.test_<TAB>
+
+In []: mlab.test_points3d()
+In []: mlab.clf()
+In []: mlab.test_plot3d()
+In []: mlab.clf()
+In []: mlab.test_surf()
+In []: mlab.test_surf??
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{\typ{mlab} plotting functions}
+    \begin{columns}
+        \column{0.25\textwidth}
+        \myemph{\Large 0D data}
+        \column{0.5\textwidth}
+    \pgfimage[width=2in]{../MEDIA/m2/mlab/points3d_ex}
+    \end{columns}
+
+    \begin{lstlisting}
+In []: t = linspace(0, 2*pi, 50)
+In []: u = cos(t) * pi
+In []: x, y, z = sin(u), cos(u), sin(t)
+    \end{lstlisting}
+    \emphbar{\PythonCode{In []: mlab.points3d(x, y, z)}}
+\end{frame}
+
+\begin{frame}[fragile]
+  \begin{columns}
+        \column{0.25\textwidth}
+        \myemph{\Large 1D data}
+        \column{0.5\textwidth}
+        \pgfimage[width=2.5in]{../MEDIA/m2/mlab/plot3d_ex}
+  \end{columns}
+  \emphbar{\PythonCode{In []: mlab.plot3d(x, y, z, t)}}
+
+    Plots lines between the points
+    
+\end{frame}
+
+\begin{frame}[fragile]
+    \begin{columns}
+        \column{0.25\textwidth}
+        \myemph{\Large 2D data}
+        \column{0.5\textwidth}
+        \pgfimage[width=2in]{MEDIA/m2/mlab/surf_ex}
+    \end{columns}            
+    \begin{lstlisting}
+In []: x, y = mgrid[-3:3:100j,-3:3:100j]
+In []: z = sin(x*x + y*y)
+    \end{lstlisting}
+
+    \emphbar{\PythonCode{In []: mlab.surf(x, y, z)}}
+
+    \alert{Assumes the points are rectilinear}
+
+\end{frame}
+
+
+
+
+\section{Solving linear systems}
 
 \begin{frame}[fragile]
 \frametitle{Solution of equations}
