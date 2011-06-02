@@ -1,4 +1,4 @@
-.PHONY: all cleallall basic advanced clean
+.PHONY: all cleanall basic advanced clean
 
 all: basic advanced 
 

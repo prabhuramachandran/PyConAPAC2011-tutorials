@@ -1,6 +1,6 @@
 .SUFFIXES: .tex .pdf
 
-.PHONY: all cleallall basic advanced clean
+.PHONY: all cleanall basic advanced clean
 
 
 .tex.pdf:
