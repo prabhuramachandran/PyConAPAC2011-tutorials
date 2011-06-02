@@ -1,13 +1,15 @@
 .SUFFIXES: .tex .pdf
 
+.PHONY: all cleallall basic advanced clean
+
+
 .tex.pdf:
 	pdflatex $*.tex
 	pdflatex $*.tex
 
-SLIDES= session1.pdf \
-	session2.pdf \
-	session3.pdf \
-	session4.pdf
+SLIDES= session1.pdf #session2.pdf session3.pdf session4.pdf
+
+pdf:    all
 
 all: 	$(SLIDES)
 
