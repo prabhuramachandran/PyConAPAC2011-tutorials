@@ -225,7 +225,7 @@ Out[]: 12
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{List: glicing}
+  \frametitle{List: Slicing}
   \begin{block}{Remember\ldots}
 	\kwrd{In []: p = [ 2, 3, 5, 7]}
   \end{block}
@@ -753,7 +753,8 @@ In []: ?
 \begin{frame}[fragile]
 \frametitle{Solution}
 \begin{lstlisting}
-In []: L, t = loadtxt('pendulum.txt', unpack=True)
+In []: L, t = loadtxt('pendulum.txt', 
+ ....:                unpack=True)
 In []: plot(L, t*t, '.')
 \end{lstlisting}
 or
