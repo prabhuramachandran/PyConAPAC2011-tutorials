@@ -400,20 +400,6 @@ Use \kwrd{solve()}
 
 \begin{frame}[fragile]
 \frametitle{SciPy: \typ{fsolve}}
-\begin{small}
-\begin{lstlisting}
-  In []: from scipy.optimize import fsolve
-\end{lstlisting}
-\end{small}
-\begin{itemize}
-\item Finds the roots of a system of non-linear equations
-\item Input arguments - Function and initial estimate
-\item Returns the solution
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{\typ{fsolve}}
 Find the root of $sin(z)+cos^2(z)$ nearest to $0$
 \vspace{-0.1in}
 \begin{center}
@@ -423,61 +409,23 @@ Find the root of $sin(z)+cos^2(z)$ nearest to $0$
 
 \begin{frame}[fragile]
 \frametitle{\typ{fsolve}}
-Root of $sin(z)+cos^2(z)$ nearest to $0$
-\begin{lstlisting}
-In []: fsolve(sin(z)+cos(z)*cos(z), 0)
-NameError: name 'z' is not defined
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{\typ{fsolve}}
-\begin{lstlisting}
-In []: z = linspace(-pi, pi)
-In []: fsolve(sin(z)+cos(z)*cos(z), 0)
-\end{lstlisting}
 \begin{small}
-\alert{\typ{TypeError:}}
-\typ{'numpy.ndarray' object is not callable}
-\end{small}
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{Functions - Definition}
-We have been using them all along. Now let's see how to define them.
 \begin{lstlisting}
-In []: def g(z):
- ....:     return sin(z)+cos(z)*cos(z)
+  In []: from scipy.optimize import fsolve
 \end{lstlisting}
+\end{small}
 \begin{itemize}
-\item \typ{def} -- keyword
-\item name: \typ{g}
-\item arguments: \typ{z}
-\item \typ{return} -- keyword
+\item Finds the roots of a system of non-linear equations
+\item Input arguments - \alert{Function} and initial estimate
+\item Returns the solution
 \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Functions - Calling them}
-\begin{lstlisting}
-In []: g()
----------------------------------------
-\end{lstlisting}
-\alert{\typ{TypeError:}}\typ{g() takes exactly 1 argument}
-\typ{(0 given)}
-\begin{lstlisting}
-In []: g(0)
-Out[]: 1.0
-In []: g(1)
-Out[]: 1.1333975665343254
-\end{lstlisting}
-More on Functions later \ldots
-\end{frame}
-
-\begin{frame}[fragile]
 \frametitle{\typ{fsolve} \ldots}
-Find the root of $sin(z)+cos^2(z)$ nearest to $0$
 \begin{lstlisting}
+In []: def g(z):
+ ....:     return sin(z)+cos(z)*cos(z)
 In []: fsolve(g, 0)
 Out[]: -0.66623943249251527
 \end{lstlisting}
