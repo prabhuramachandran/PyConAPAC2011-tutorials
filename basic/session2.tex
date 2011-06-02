@@ -237,8 +237,24 @@ Out[]: [3, 5]
 \begin{lstlisting}
 In []: p[0:-1]
 Out[]: [2, 3, 5]
+In []: p[1:]
+Out[]: [3, 5, 7]
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{List: Slicing \ldots}
+\begin{lstlisting}
+In []: p[0:4:2]
+Out[]: [2, 5]
+In []: p[0::2]
+Out[]: [2, 5]
 In []: p[::2]
 Out[]: [2, 5]
+In []: p[::3]
+Out[]: [2, 7]
+In []: p[::-1]
+Out[]: [7, 5, 3, 2]
 \end{lstlisting}
 \alert{\typ{list[initial:final:step]}}
 \end{frame}
