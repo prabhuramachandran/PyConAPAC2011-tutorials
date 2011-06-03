@@ -369,34 +369,6 @@ In []: legend(['sin(2y)'])
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Showing it better}
-\vspace{-0.15in}
-\begin{lstlisting}
-In []: plot(y, cos(y), 'r')
-
-In []: clf()
-In []: plot(y, sin(y), 'g', linewidth=2)
-\end{lstlisting}
-\vspace*{-0.2in}
-\begin{center}
-  \includegraphics[height=2.2in, interpolate=true]{data/green}  
-\end{center}
-%\inctime{10}
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{Annotating}
-\vspace*{-0.15in}
-\begin{lstlisting}
-In []: annotate('local max', xy=(1.5, 1))
-\end{lstlisting}
-\vspace*{-0.2in}
-\begin{center}
-  \includegraphics[height=2in, interpolate=true]{data/annotate}  
-\end{center}
-\end{frame}
-
-\begin{frame}[fragile]
 \frametitle{Legend Placement}
 \begin{block}{}
     \small
@@ -431,6 +403,34 @@ In []: legend(['sin(2y)'], loc = 'center')
 %% \end{center}
 %% %\inctime{10}
 %% \end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Showing it better}
+\vspace{-0.15in}
+\begin{lstlisting}
+In []: plot(y, cos(y), 'r')
+
+In []: clf()
+In []: plot(y, sin(y), 'g', linewidth=2)
+\end{lstlisting}
+\vspace*{-0.2in}
+\begin{center}
+  \includegraphics[height=2.2in, interpolate=true]{data/green}  
+\end{center}
+%\inctime{10}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Annotating}
+\vspace*{-0.15in}
+\begin{lstlisting}
+In []: annotate('local max', xy=(1.5, 1))
+\end{lstlisting}
+\vspace*{-0.2in}
+\begin{center}
+  \includegraphics[height=2in, interpolate=true]{data/annotate}  
+\end{center}
+\end{frame}
 
 \begin{frame}[fragile]
 \frametitle{Saving \& Closing}
