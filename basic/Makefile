@@ -9,7 +9,7 @@ SLIDES= session1.pdf \
 	session3.pdf \
 	session4.pdf
 
-all: 	$(SLIDES)
+all: 	$(SLIDES) quickref.pdf
 
 cleanall:
 	rm -f *.dvi *.log *.bak *.aux *.bbl *.blg *.idx *.ps *.eps *.pdf *.toc *.out *~ *.vrb *.nav *.snm
