@@ -74,12 +74,13 @@ Title (\lstinline|pylab| accepts \TeX~in any text expression):\\
 
 Legend:\\
 Use standard placement:\\
-{\ex \lstinline|    legend('sin(x)', loc=center)|}\\
-Or explicitly specify location:\\
-{\ex \lstinline|    legend(['sin(x)'], loc=(.8,.1))|}
+{\ex \lstinline|    legend(['sin(x)'], loc=center)|}\\
+If \lstinline|loc| is not specified, \lstinline|best| is used
+
+#FIXME: Add changing axis lengths. 
 
 Annotate:\\
-{\ex \lstinline|    legend('annotation string', xy=(1.5, 1))|}
+{\ex \lstinline|    annotate('annotation string', xy=(1.5, 1))|}
 
 Saving figures:\\
 {\ex \lstinline|    savefig('sinusoids.png')|}
@@ -88,12 +89,7 @@ Miscellaneous:\\
 {\ex \lstinline|    clf()|} to clear the plot area\\
 {\ex \lstinline|    close()|} to close the figure
 
-%*********************************************
-\textbf{Other plots}
-
-Pie Charts:\\
-{\ex \lstinline|    pie(science.values(), labels=science.keys())|},
-where {\ex \lstinline|science|} is a dictionary.
+#FIXME: Add IPython Tips. 
 
 %*********************************************
 \hr\textbf{Saving and Running scripts}
@@ -108,17 +104,11 @@ To run \lstinline|sample.py| \\
  \hr\textbf{Reading from files}
 
 \lstinline|filename.txt| is a file with float data. 
-
-Using a for loop: (reading line by line)
-\vspace{-8pt}
-\begin{lstlisting}
-for line in open('filename.txt'):
-    # some processing
-\end{lstlisting}
-\vspace{-8pt}
-Using loadtxt: (reading all the data at once)\\
+Using loadtxt: \\
 {\ex \lstinline|X = loadtxt('filename.txt')|} \\
 X is an array with all the data from \lstinline|filename.txt|\\
+{\ex \lstinline|X,Y = loadtxt('filename.txt', unpack=True)|} \\
+X,Y contain each column of the data\\
 {\ex \lstinline|X = loadtxt('filename.txt', delimiter=';')|} \\
 when ';' delmits the columns of data
 
@@ -128,6 +118,8 @@ when ';' delmits the columns of data
 {\ex \lstinline|mean|, \lstinline|median|, \lstinline|std|}
 
 %*********************************************
+#FIXME: add array.shape, dtype etc. 
+
 \hr\textbf{Array Creation}
 
 {\ex \lstinline|C = array([[11,12,13], [21,22,23], [31,32,33]])|}\\
@@ -166,6 +158,10 @@ For a Matrix A and B of equal shapes:\\
 {\ex \lstinline|eig(A)|} eigen values and vectors\\
 {\ex \lstinline|norm(A)|} norm\\
 {\ex \lstinline|svd(A)|} singular value decomposition
+
+#FIXME: More compact arrangement?
+
+#FIXME: Add lstsq?
 
 %*********************************************
 \hr\textbf{Solving Linear Equations}
@@ -226,6 +222,11 @@ def f(y, t):
 {\ex \lstinline|freq = fftfreq(500, t[1] - t[0])|}\\
 {\ex \lstinline|plot(freq[:250], abs(f)[:250])|}\\
 
+#FIXME: Add Random numbers
+
+#FIXME: Add Record arrays
+
+#FIXME: Add mlab\\
 \end{multicols*}
 
 \end{document}
