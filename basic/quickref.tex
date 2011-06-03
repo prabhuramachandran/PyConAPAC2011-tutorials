@@ -18,6 +18,7 @@
 
 \newcommand{\hr}{\centerline{\rule{3.5in}{1pt}}}
 \newcommand{\skipin}{\hspace*{12pt}}
+\newcommand{\typ}[1]{\lstinline{#1}}
 
 \usepackage{color}
 \definecolor{darkgreen}{rgb}{0,0.5,0}
@@ -35,7 +36,7 @@
 \begin{center}
 \textbf{Python for Scientific Computing}\\
 \textbf{Quick Reference}\\
-FOSSEE -- Dec 1, 2010\\
+FIXME: fix header and date?
 \end{center}
 \vspace{-2ex}
 
@@ -45,7 +46,9 @@ FOSSEE -- Dec 1, 2010\\
 To start \lstinline|ipython| with \lstinline|pylab|:\\
 \lstinline|    $ ipython -pylab| %$
 
-To exit: \lstinline|^D| (Ctrl-D)
+To exit: \lstinline|^D| (Ctrl-d)
+
+To break from loops: \lstinline|^C| (Ctrl-c)
 
 %*********************************************
 \hr\textbf{Plotting}
@@ -73,11 +76,9 @@ Title (\lstinline|pylab| accepts \TeX~in any text expression):\\
 {\ex \lstinline|    title(r'$\sigma$ vs. $\sin(\sigma)$')|} 
 
 Legend:\\
-Use standard placement:\\
 {\ex \lstinline|    legend(['sin(x)'], loc=center)|}\\
+{\ex \lstinline|    legend(['sin(x)', 'cos(x)'])|}\\
 If \lstinline|loc| is not specified, \lstinline|best| is used
-
-#FIXME: Add changing axis lengths. 
 
 Annotate:\\
 {\ex \lstinline|    annotate('annotation string', xy=(1.5, 1))|}
@@ -85,11 +86,30 @@ Annotate:\\
 Saving figures:\\
 {\ex \lstinline|    savefig('sinusoids.png')|}
 
+Axes lengths:\\
+Get the axes lengths:\\
+{\ex \lstinline|    xmin, xmax = xlim()|}\\
+{\ex \lstinline|    ymin, ymax = ylim()|}\\
+Set the axes lengths:\\
+{\ex \lstinline|    xlim(-2*pi, 2*pi)|}\\
+{\ex \lstinline|    ylim(-1.2, 1.2)|}
+
 Miscellaneous:\\
 {\ex \lstinline|    clf()|} to clear the plot area\\
 {\ex \lstinline|    close()|} to close the figure
 
-#FIXME: Add IPython Tips. 
+%*********************************************
+\hr\textbf{IPython tips}
+
+\typ{TAB} completes commands\\
+History: Up, down arrows or (\typ{Ctrl-p}/\typ{Ctrl-n})\\
+Search: \typ{Ctrl-r} and start typing\\
+\typ{Ctrl-a}: go to start of line\\
+\typ{Ctrl-e}: go to end of line\\
+\typ{Ctrl-k}: kill to end of line\\
+Help: \typ{object?}\\
+Source Code: \typ{object??}\\
+Time execution of expression/statement: \typ{\%timeit}
 
 %*********************************************
 \hr\textbf{Saving and Running scripts}
@@ -118,8 +138,16 @@ when ';' delmits the columns of data
 {\ex \lstinline|mean|, \lstinline|median|, \lstinline|std|}
 
 %*********************************************
-#FIXME: add array.shape, dtype etc. 
+\hr\textbf{NumPy Arrays}
 
+Efficient, powerful array type\\
+Fixed size: \typ{arr.size}\\
+Homogeneous: \typ{arr.dtype}\\
+Extent along each dimension: \typ{arr.shape}\\
+Bytes per element: \typ{arr.itemsize}\\
+Indexing start from 0
+
+%*********************************************
 \hr\textbf{Array Creation}
 
 {\ex \lstinline|C = array([[11,12,13], [21,22,23], [31,32,33]])|}\\
@@ -130,6 +158,8 @@ when ';' delmits the columns of data
 {\ex \lstinline|A = ones((3,2))|} array of ones of shape (3,2)\\
 \skipin similarly \lstinline|zeros, empty|\\
 {\ex \lstinline|I = identity(3)|} identity matrix of size 3x3
+
+FIXME: Add mgrid ogrid?
 
 %*********************************************
 \hr\textbf{Accessing \& Changing elements}
@@ -158,8 +188,6 @@ For a Matrix A and B of equal shapes:\\
 {\ex \lstinline|eig(A)|} eigen values and vectors\\
 {\ex \lstinline|norm(A)|} norm\\
 {\ex \lstinline|svd(A)|} singular value decomposition
-
-#FIXME: More compact arrangement?
 
 #FIXME: Add lstsq?
 
@@ -220,13 +248,39 @@ def f(y, t):
 {\ex \lstinline|y = sin(4*pi*t)|} a sinusoidal signal\\
 {\ex \lstinline|f = fft(y)|}\\
 {\ex \lstinline|freq = fftfreq(500, t[1] - t[0])|}\\
-{\ex \lstinline|plot(freq[:250], abs(f)[:250])|}\\
+{\ex \lstinline|plot(freq[:250], abs(f)[:250])|}
 
-#FIXME: Add Random numbers
+\hr\textbf{Random Numbers}
 
-#FIXME: Add Record arrays
+{\ex \typ{from numpy import random}}}\\
+{\ex \typ{random.random}}: Uniform deviates in $[0, 1)$\\
+{\ex \typ{random.normal}}: Random samples -- Gaussian dist.\\
+{\ex \typ{random.normal}}: Random samples -- Gaussian dist.\\
+{\ex \typ{x = random.random(size=1000)}}\\
+{\ex \typ{x,y = random.normal(size=(2,1000))}}
 
-#FIXME: Add mlab\\
+\hr\textbf{Record Arrays}
+
+{\ex \typ{typ = [('id', int), ('x', float)]}}\\
+{\ex \typ{rec = numpy.zeros(10, dtype=typ)}}\\
+{\ex \typ{rec['id'] = range(10)}}\\
+{\ex \typ{rec['x'] = random.random(size=10)}}\\
+
+{\ex \typ{data = csv2rec('data.csv')}} # from csv to record array
+
+\hr\textbf{\typ{mlab}}
+
+{\ex \typ{from enthought.mayavi import mlab}} # Ready to Go!\\
+{\ex \typ{mlab.test_<TAB>}} # Test Functions\\
+{\ex \typ{mlab.points3d(x, y, z)}} # Plot points in 3D\\
+{\ex \typ{mlab.contour3d(x*x*0.5 + y*y + z*z*2)}} # 3D contours\\
+{\ex \typ{gcf}} # get current figure\\
+{\ex \typ{savefig}} {\ex \typ{figure}}\\
+{\ex \typ{axes}} {\ex \typ{outline}}\\
+{\ex \typ{title}} {\ex \typ{xlabel, ylabel, zlabel}}\\
+{\ex \typ{colorbar}} {\ex \typ{scalarbar}} {\ex \typ{vectorbar}}\\
+{\ex \typ{show}} 
+
 \end{multicols*}
 
 \end{document}
