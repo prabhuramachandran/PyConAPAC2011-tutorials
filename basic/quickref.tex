@@ -36,7 +36,7 @@
 \begin{center}
 \textbf{Python for Scientific Computing}\\
 \textbf{Quick Reference}\\
-FIXME: fix header and date?
+\textbf{FIXME:} fix header and date?
 \end{center}
 \vspace{-2ex}
 
@@ -140,12 +140,10 @@ when ';' delmits the columns of data
 %*********************************************
 \hr\textbf{NumPy Arrays}
 
-Efficient, powerful array type\\
 Fixed size: \typ{arr.size}\\
 Homogeneous: \typ{arr.dtype}\\
 Extent along each dimension: \typ{arr.shape}\\
-Bytes per element: \typ{arr.itemsize}\\
-Indexing start from 0
+Bytes per element: \typ{arr.itemsize}
 
 %*********************************************
 \hr\textbf{Array Creation}
@@ -159,7 +157,7 @@ Indexing start from 0
 \skipin similarly \lstinline|zeros, empty|\\
 {\ex \lstinline|I = identity(3)|} identity matrix of size 3x3
 
-FIXME: Add mgrid ogrid?
+\textbf{FIXME:} Add mgrid ogrid?
 
 %*********************************************
 \hr\textbf{Accessing \& Changing elements}
@@ -178,7 +176,7 @@ rows; all cols
 %*********************************************
 \hr\textbf{Matrix Operations}
 
-For a Matrix A and B of equal shapes:\\
+For matrices A and B of equal shapes:\\
 {\ex \lstinline|A.T|} transpose\\
 {\ex \lstinline|sum(A)|} sum of all elements\\
 {\ex \lstinline|A+B|} addition\\
@@ -189,7 +187,7 @@ For a Matrix A and B of equal shapes:\\
 {\ex \lstinline|norm(A)|} norm\\
 {\ex \lstinline|svd(A)|} singular value decomposition
 
-#FIXME: Add lstsq?
+\textbf{FIXME:} Add lstsq?
 
 %*********************************************
 \hr\textbf{Solving Linear Equations}
@@ -252,7 +250,7 @@ def f(y, t):
 
 \hr\textbf{Random Numbers}
 
-{\ex \typ{from numpy import random}}}\\
+{\ex \typ{from numpy import random}}\\
 {\ex \typ{random.random}}: Uniform deviates in $[0, 1)$\\
 {\ex \typ{random.normal}}: Random samples -- Gaussian dist.\\
 {\ex \typ{random.normal}}: Random samples -- Gaussian dist.\\
@@ -266,15 +264,15 @@ def f(y, t):
 {\ex \typ{rec['id'] = range(10)}}\\
 {\ex \typ{rec['x'] = random.random(size=10)}}\\
 
-{\ex \typ{data = csv2rec('data.csv')}} # from csv to record array
+{\ex \typ{data = csv2rec('data.csv')}} from csv to record array
 
 \hr\textbf{\typ{mlab}}
 
-{\ex \typ{from enthought.mayavi import mlab}} # Ready to Go!\\
-{\ex \typ{mlab.test_<TAB>}} # Test Functions\\
-{\ex \typ{mlab.points3d(x, y, z)}} # Plot points in 3D\\
-{\ex \typ{mlab.contour3d(x*x*0.5 + y*y + z*z*2)}} # 3D contours\\
-{\ex \typ{gcf}} # get current figure\\
+{\ex \typ{from enthought.mayavi import mlab}}  Ready to Go!\\
+{\ex \typ{mlab.test_<TAB>}}  Test Functions\\
+{\ex \typ{mlab.points3d(x, y, z)}}  Plot points in 3D\\
+{\ex \typ{mlab.contour3d(x*x*0.5 + y*y + z*z*2)}}  3D contours\\
+{\ex \typ{gcf}} get current figure\\
 {\ex \typ{savefig}} {\ex \typ{figure}}\\
 {\ex \typ{axes}} {\ex \typ{outline}}\\
 {\ex \typ{title}} {\ex \typ{xlabel, ylabel, zlabel}}\\
