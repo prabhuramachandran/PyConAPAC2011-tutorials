@@ -285,12 +285,7 @@ That is it! Easy, and very convenient
 \begin{frame}
     \frametitle{Basic structure}
 
-    .pyx file -> Cython -> C -> distutils -> Python-C-Extension ->
-    Python
-
-    Or
-
-    .pyx file -> pyximport -> Python
+    \includegraphics[height=3in]{data/cython}
 
 \end{frame}
 
@@ -345,7 +340,7 @@ Hello PyCon!
 \end{frame}
 
 \begin{frame}[fragile]
-    \frametitle{Meaningful example: phase 0}
+    \frametitle{Meaningful example: Phase 0}
 \begin{lstlisting}
 # -- quad0.pyx --
 from math import sin
@@ -364,15 +359,29 @@ def integrate(a, b, N):
 
 \begin{frame}[fragile]
     \frametitle{Phase 1}
+    \vspace*{-0.2in}
 \begin{lstlisting}
 # -- quad1.pyx --
 from math import sin
+\end{lstlisting}
+\lstset{backgroundcolor=\color{yellow}}
+\begin{lstlisting}
 def f(double x):
+\end{lstlisting}
+\lstset{backgroundcolor=\color{white}}
+\vspace*{-1ex}
+\begin{lstlisting}
     return sin(x**2)
-
+\end{lstlisting}
+\lstset{backgroundcolor=\color{yellow}}
+\begin{lstlisting}
 def integrate(double a, double b, int N):
     cdef int i
     cdef double s, dx
+\end{lstlisting}
+\lstset{backgroundcolor=\color{white}}
+\vspace*{-1ex}
+\begin{lstlisting}
     s = 0.0
     dx = float(b-a)/N
     for i in range(N):
@@ -466,7 +475,15 @@ def integrate(Function f, double a, double b,
               int N):
     # ...
     for i in range(N):
-        s += f.eval(a+i*dx)  # Notice f.eval 
+\end{lstlisting}
+\lstset{backgroundcolor=\color{yellow}}
+\vspace*{-1em}
+\begin{lstlisting}
+        s += f.eval(a+i*dx)
+\end{lstlisting}
+\lstset{backgroundcolor=\color{white}}
+\vspace*{-1em}
+\begin{lstlisting}
     return s * dx
 \end{lstlisting}
 \end{frame}
@@ -489,10 +506,10 @@ import numpy as np
 cimport numpy as np
 
 # Declare numpy arrays.
-cdef np.ndarray c
+cdef np.ndarray arr
 
 # Better still
-cdef np.ndarray[np.complex128_t, ndim=2] c
+cdef np.ndarray[np.int64_t, ndim=2] arr
 
 \end{lstlisting}
 
@@ -512,9 +529,11 @@ cimport numpy as np
 def mandel_cy(int h, int w, int maxit=20):
 \end{lstlisting}
 \lstset{backgroundcolor=\color{white}}
+\vspace*{-1em}
 \begin{lstlisting}
-    """Returns a numpy array image of the Mandelbrot set."""
+    """Mandelbrot set ..."""
 \end{lstlisting}
+\vspace*{-1em}
 \lstset{backgroundcolor=\color{yellow}}
 \begin{lstlisting}
     cdef np.ndarray[np.complex128_t, ndim=2] c
@@ -546,9 +565,35 @@ def mandel_cy(int h, int w, int maxit=20):
                     break
     return output.T
 \end{lstlisting}
-
 \end{frame}
 
+\begin{frame}[fragile,plain]
+    \frametitle{The result}
+\begin{lstlisting}
+In []: from mandel_cy import mandel_cy
+In []: o = mandel_cy(1024,1024)
+In []: imshow(o)
+\end{lstlisting}
+\vspace*{-1em}
+\begin{center}
+    \includegraphics[height=2.5in]{data/mandelbrot}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Timing}
+    \begin{lstlisting}
+In []: %timeit o = mandel_py(256, 256)
+1 loops, best of 3: 2.47 s per loop
+
+In []: %timeit o = mandel_np(256,256)
+10 loops, best of 3: 48.1 ms per loop
+
+In []: %timeit o = mandel_cy(256,256)
+100 loops, best of 3: 3.17 ms per loop
+    \end{lstlisting}
+A whopping 780x speedup!
+\end{frame}
 
 \begin{frame}
     \frametitle{Additional points}
