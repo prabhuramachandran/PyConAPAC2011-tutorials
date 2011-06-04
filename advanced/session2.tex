@@ -242,9 +242,325 @@ $ rm -rf ANOTHER
 That is it! Easy, and very convenient
 \end{frame}
 
-
-
 \section{Cython}
+
+\begin{frame}
+  \frametitle{Motivation}
+  \begin{itemize}
+
+      \item Pure Python can be very slow
+
+      \item Not trivial to write C-extensions
+
+      \item Interfacing to C libraries not too easy 
+
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Introduction}
+  \begin{itemize}
+    
+    \item Python-based language
+
+    \item Optional static typing
+
+    \item Call external C libraries
+
+    \item Python to C compiler
+
+    \item \alert{``Cython is Python with C-data-types''}
+
+    \item \url{cython.org}
+
+    \item \url{docs.cython.org}
+    
+    \item 500x speedup is possible!
+
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Basic structure}
+
+    .pyx file -> Cython -> C -> distutils -> Python-C-Extension ->
+    Python
+
+    Or
+
+    .pyx file -> pyximport -> Python
+
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Simple example}
+\begin{lstlisting}
+# -- hello.pyx --
+def hello(name):
+    print("Hello %s!"%name)
+# EOF
+
+$ ipython
+In []: import pyximport
+In []: pyximport.install()
+In []: import hello
+In []: hello.hello('PyCon')
+Hello PyCon!
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Simple \typ{setup.py}}
+\begin{lstlisting}
+# -- setup.py --
+from setuptools import setup
+from Cython.Distutils import build_ext
+from numpy.distutils.extension import \ 
+    Extension
+setup(
+    cmdclass = {'build_ext': build_ext},
+    ext_modules = [Extension("hello", 
+                   ["hello.pyx"])
+                  ]
+)
+# EOF
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Compiling the code}
+\begin{lstlisting}
+$ python setup.py build_ext --inplace
+# ...
+$ ipython
+In []: import hello
+In []: hello.hello('PyCon')
+Hello PyCon!
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Meaningful example: phase 0}
+\begin{lstlisting}
+# -- quad0.pyx --
+from math import sin
+def f(x):
+    return sin(x**2)
+
+def integrate(a, b, N):
+    s = 0
+    dx = float(b-a)/N
+    for i in range(N):
+        s += f(a+i*dx)
+    return s * dx
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Phase 1}
+\begin{lstlisting}
+# -- quad1.pyx --
+from math import sin
+def f(double x):
+    return sin(x**2)
+
+def integrate(double a, double b, int N):
+    cdef int i
+    cdef double s, dx
+    s = 0.0
+    dx = float(b-a)/N
+    for i in range(N):
+        s += f(a+i*dx)
+    return s * dx
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Timing}
+\begin{lstlisting}
+In []: import quad0
+In []: %timeit quad0.integrate(0,1,10000)
+100 loops, best of 3: 3.45 ms per loop
+
+In []: import quad1
+In []: %timeit quad1.integrate(0,1,10000)
+100 loops, best of 3: 2.24 ms per loop
+\end{lstlisting}
+Not much.
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Cython annotation}
+\begin{lstlisting}
+$ cython -a quad1.pyx
+
+$ firefox quad1.html
+\end{lstlisting}
+Very handy!
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+    \frametitle{Phase 2}
+\begin{lstlisting}
+# -- quad2.pyx --
+from math import sin
+cdef double f(double x) except *:
+    return sin(x**2)
+# ...
+\end{lstlisting}
+Could also use \typ{cpdef} instead
+
+\begin{lstlisting}
+In []: %timeit quad2.integrate(0,1,10000)
+1000 loops, best of 3: 1.25 ms per loop
+\end{lstlisting}
+Looks like calling a Python function is slow.
+
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Phase 3: external C functions}
+    Calling \typ{math.h}
+\begin{lstlisting}
+# -- quad3.pyx --
+cdef extern from "math.h":
+    double sin(double)
+
+cdef double f(double x):
+    return sin(x**2)
+# ...
+\end{lstlisting}
+
+\begin{lstlisting}
+In []: %timeit quad3.integrate(0,1,10000)
+1000 loops, best of 3: 276 us per loop
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+    \frametitle{Extension classes}
+    \small
+\begin{lstlisting}
+cdef class Function:
+    cpdef double eval(self, double x) except *:
+        return 0
+
+cdef class SinOfSquareFunction(Function):
+    cpdef double eval(self, double x) except *:
+        return sin(x*x)
+
+\end{lstlisting}
+\pause
+\begin{lstlisting}
+def integrate(Function f, double a, double b, 
+              int N):
+    # ...
+    for i in range(N):
+        s += f.eval(a+i*dx)  # Notice f.eval 
+    return s * dx
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Extension classes}
+    \begin{itemize}
+        \item Can be extended in Python
+        \item No multiple inheritance
+        \item Cannot subclass Python class in Cython
+        \item Can have typed attributes
+        \item More info: \url{docs.cython.org}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{NumPy support}
+\begin{lstlisting}
+import numpy as np
+cimport numpy as np
+
+# Declare numpy arrays.
+cdef np.ndarray c
+
+# Better still
+cdef np.ndarray[np.complex128_t, ndim=2] c
+
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile,allowframebreaks]
+    \frametitle{Full example}
+    \small
+\begin{lstlisting}
+import numpy as np
+\end{lstlisting}
+\lstset{backgroundcolor=\color{yellow}}
+\begin{lstlisting}
+cimport cython
+cimport numpy as np
+@cython.boundscheck(False)
+def mandel_cy(int h, int w, int maxit=20):
+\end{lstlisting}
+\lstset{backgroundcolor=\color{white}}
+\begin{lstlisting}
+    """Returns a numpy array image of the Mandelbrot set."""
+\end{lstlisting}
+\lstset{backgroundcolor=\color{yellow}}
+\begin{lstlisting}
+    cdef np.ndarray[np.complex128_t, ndim=2] c
+    cdef np.ndarray[np.int64_t, ndim=2] output
+    cdef int i, j, k
+    cdef double complex c0, z
+\end{lstlisting}
+\lstset{backgroundcolor=\color{white}}
+\begin{lstlisting}
+    x, y = np.ogrid[-2:0.8:w*1j, -1.4:1.4:h*1j]
+    c = x+y*1j
+    output = np.zeros((w, h), dtype=int) + maxit
+    for i in range(h):
+        for j in range(w):
+            z = c[i,j]
+            c0 = c[i,j]
+            for k in xrange(maxit):
+                z = z**2 + c0
+\end{lstlisting}
+\vspace*{-1em}
+\lstset{backgroundcolor=\color{yellow}}
+\begin{lstlisting}
+                if (z*z.conjugate()).real > 4.0:
+\end{lstlisting}
+\vspace*{-1em}
+\lstset{backgroundcolor=\color{white}}
+\begin{lstlisting}
+                    output[i, j] = k
+                    break
+    return output.T
+\end{lstlisting}
+
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Additional points}
+    \begin{itemize}
+        \item \typ{.pxd} files
+        \item Compiler directives:
+            \begin{itemize}
+                \item \typ{nonecheck}
+                \item \typ{boundscheck}
+            \end{itemize}
+    \end{itemize}
+\end{frame}
 
 
 \end{document}
