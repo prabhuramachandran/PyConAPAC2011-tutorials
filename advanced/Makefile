@@ -7,7 +7,7 @@
 	pdflatex $*.tex
 	pdflatex $*.tex
 
-SLIDES= session1.pdf #session2.pdf session3.pdf session4.pdf
+SLIDES= session1.pdf session2.pdf #session3.pdf session4.pdf
 
 pdf:    all
 
