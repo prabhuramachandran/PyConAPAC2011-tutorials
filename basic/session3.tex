@@ -338,6 +338,7 @@ In []: imshow(a[::2,::2])
 Out[]: <matplotlib.image.AxesImage object at 0xb765c8c>
   \end{lstlisting}
 \end{small}
+\inctime{15}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -473,6 +474,7 @@ Out[]:
         [-0.74535599,  0.2981424 ,  0.59628479]]))
   \end{lstlisting}
   \end{small}
+  \inctime{10}
 \end{frame}
 
 \section{Least Squares Fit}
@@ -576,7 +578,7 @@ In []: Tline = coef[0]*L + coef[1]
 In []: Tline.shape
 \end{lstlisting}
 \begin{itemize}
-\item Now plot \typ{Tline} vs. \typ{L}, to get the Least squares fit line. 
+\item Now plot \typ{Tline} vs. \typ{L}, to get the least squares fit line. 
 \end{itemize}
 \begin{lstlisting}
 In []: plot(L, Tline, 'r')
@@ -591,6 +593,7 @@ In []: plot(L, tsq, 'o')
 \begin{figure}
 \includegraphics[width=4in]{data/least-sq-fit}
 \end{figure}
+\inctime{10}
 \end{frame}
 
 \section{Random numbers}
@@ -639,7 +642,7 @@ In []: img = random.random(
 In []: clf()
 In []: imshow(img)
 \end{lstlisting}
-
+\inctime{5}
 \end{frame}
 
 
@@ -680,7 +683,10 @@ In []: csv2rec?
 \begin{frame}[fragile]
     \frametitle{\typ{csv2rec} example data}
     \begin{itemize}
-        \item Describe the data here
+        \item \typ{data.csv}
+        \item First column ``x''
+        \item Second column ``y''
+        \item Third column ``temp''
     \end{itemize}
 \end{frame}
 
@@ -689,7 +695,8 @@ In []: csv2rec?
     \begin{lstlisting}
 In []: data = csv2rec('data.csv')
 In []: scatter(data['x'], data['y'], 
-  ...:         c=data['value'])
+  ...:         c=data['temp'])
+In []: colorbar()
     \end{lstlisting}
 \end{frame}
 
@@ -703,6 +710,7 @@ In []: scatter(data['x'], data['y'],
   \item Record arrays
   \item \typ{csv2rec}
   \end{itemize}
+  \inctime{5}
 \end{frame}
 
 \end{document}

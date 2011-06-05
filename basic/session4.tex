@@ -294,6 +294,7 @@ In []: mlab.contour3d(x*x*0.5 + y*y +
     \begin{center}
     \pgfimage[width=4in]{../MEDIA/m2/m2_ug_doc}
     \end{center}
+    \inctime{20}
 \end{frame}
 
 
@@ -353,7 +354,7 @@ We can use \kwrd{allclose()} to check.
 In []: allclose(Ax, b)
 Out[]: True
 \end{lstlisting}
-\inctime{10}
+\inctime{5}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -451,6 +452,7 @@ fsolve(g, 0)
   \begin{center}
 \includegraphics[height=2in, interpolate=true]{data/fsolve_tanx}
   \end{center}
+  \inctime{10}
 \end{frame}
 
 %% \begin{frame}[fragile]
@@ -569,6 +571,7 @@ In []: pend_sol = odeint(pend_int,
 \begin{center}
 \includegraphics[height=2in, interpolate=true]{data/ode}  
 \end{center}
+  \inctime{10}
 \end{frame}
 
 \section{FFTs}
@@ -647,6 +650,19 @@ Only scratched the surface here \dots
   \item Random number generation
   \item FFTs and basic signal processing
   \end{itemize}
+  \inctime{10}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Further reading}
+    \begin{itemize}
+        \item \url{ipython.github.com/ipython-doc}
+        \item \url{matplotlib.sf.net/contents.html}
+        \item \url{scipy.org/Tentative_NumPy_Tutorial}
+        \item \url{docs.scipy.org/doc/scipy/reference/tutorial}
+        \item \url{github.enthought.com/mayavi/mayavi}
+    \end{itemize}
 \end{frame}
 
 \end{document}
