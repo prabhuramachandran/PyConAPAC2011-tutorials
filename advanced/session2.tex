@@ -225,6 +225,7 @@ $ ENV\Scripts\deactivate.bat
 
 \begin{frame}[fragile]
   \frametitle{Usage}
+  \vspace*{-1em}
   \begin{lstlisting}
 (ENV)$ deactivate
 $ python virtualenv.py ANOTHER
@@ -240,6 +241,9 @@ $ rm -rf ANOTHER
 \end{lstlisting}
 
 That is it! Easy, and very convenient
+
+\inctime{15}
+
 \end{frame}
 
 \section{Cython}
@@ -414,6 +418,7 @@ $ firefox quad1.html
 \end{lstlisting}
 Very handy!
 
+\inctime{15}
 \end{frame}
 
 
@@ -497,6 +502,7 @@ def integrate(Function f, double a, double b,
         \item Can have typed attributes
         \item More info: \url{docs.cython.org}
     \end{itemize}
+    \inctime{10}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -583,16 +589,16 @@ In []: imshow(o)
 \begin{frame}[fragile]
     \frametitle{Timing}
     \begin{lstlisting}
-In []: %timeit o = mandel_py(256, 256)
-1 loops, best of 3: 2.47 s per loop
+In []: %timeit mandel_py(256, 256)
+1 loops, best of 3: 2.96 s per loop
 
-In []: %timeit o = mandel_np(256,256)
-10 loops, best of 3: 48.1 ms per loop
+In []: %timeit mandel_np(256,256)
+10 loops, best of 3: 42.5 ms per loop
 
-In []: %timeit o = mandel_cy(256,256)
-100 loops, best of 3: 3.17 ms per loop
+In []: %timeit mandel_cy(256,256)
+100 loops, best of 3: 3.95 ms per loop
     \end{lstlisting}
-A whopping 780x speedup!
+A whopping 700x speedup!
 \end{frame}
 
 \begin{frame}
@@ -605,6 +611,7 @@ A whopping 780x speedup!
                 \item \typ{boundscheck}
             \end{itemize}
     \end{itemize}
+    \inctime{10}
 \end{frame}
 
 

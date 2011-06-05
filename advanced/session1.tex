@@ -141,24 +141,13 @@ June 9, 2011
 \begin{frame}
 \frametitle{Checklist}
   \begin{enumerate}
-    \item \alert{FIXME update when this session is done!}
     \item Data files: 
       \begin{itemize}
-      \item \typ{anag.txt}
-      \item \typ{holmes.txt}
-      \item \typ{pendulum.txt}
-      \item \typ{pos.txt}
-      \item \typ{sslc1.txt}
+      \item \typ{data.csv}
       \end{itemize}
     \item Python scripts: 
       \begin{itemize}
-      \item \typ{sslc_allreg.py}
-      \item \typ{sslc_science.py}
-      \end{itemize}
-    \item Images
-      \begin{itemize}
-      \item \typ{lena.png}
-      \item \typ{smoothing.gif}
+          \item \typ{code} directory
       \end{itemize}
   \end{enumerate}
 \end{frame}
@@ -192,7 +181,8 @@ June 9, 2011
         \item Numpy/Scipy: array and numerics
         \item Matplotlib/chaco: 2d plotting
         \item Mayavi: 3d plotting
-        \item Enthought Tool Suite (ETS): application building
+        \item Enthought Tool Suite (ETS): UI's, applications, data
+            visualization etc.
         \item Sympy: symbolic math 
         \item Cython: Python $\rightarrow$ C compiler 
         \item mpi4py, PyOpenCL, PyCUDA etc. 
@@ -278,6 +268,7 @@ June 9, 2011
   \item Profiles: \verb+math, scipy, numeric, pysh+ etc.
   \item \verb+%magic+: \alert{Show help on all magics}
   \end{itemize}
+  \inctime{15}
 \end{frame}
 
 \section{NumPy arrays}
@@ -291,7 +282,7 @@ June 9, 2011
         \item \alert{Mostly a recap}
     \item Efficient, powerful array type
     \item Abstracts out standard operations on arrays
-    \item COnvenience functions
+    \item Convenience functions
     \item \typ{ipython --pylab} imports part of numpy
     \item Without the Pylab mode do:
     \end{itemize}
@@ -327,7 +318,6 @@ In []: print a[0], a[-1]
 1, 4
 
 In []: a[0] = -1
-In []: a[0] = 1
 \end{lstlisting}
 Operations are elementwise
 \end{frame}
@@ -472,6 +462,7 @@ Out[]: array([ 1.,  1.,  1.,  1.])
   \item \typ{sum(x, axis=0), product(x, axis=0)}
   \item \typ{dot(a, b)}
   \end{itemize}
+  \inctime{10}
 \end{frame}
 
 \section{Advanced Numpy}
@@ -513,6 +504,7 @@ Out[]: array([4, 9])
 
 \begin{frame}[fragile]
   \frametitle{Boolean indices}
+  \vspace*{-1ex}
   \begin{lstlisting}
 In []: a > 5
 Out[]: 
@@ -527,6 +519,7 @@ array([[ 0,  1,  4],
        [-1, -1, -1],
        [-1, -1, -1]])
   \end{lstlisting}
+  \inctime{5}
 \end{frame}
 
 
@@ -601,16 +594,17 @@ In []: x[...,newaxis] + y # Works.
           that dimension.
 
   \end{itemize}
+  \inctime{10}
 \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{Copies \& Views}
   \vspace{-0.1in}
   \begin{lstlisting}
-In []: a = arange(1,9); a.shape=3,3
+In []: a = arange(9); a.shape=3,3
 In []: b = a
 In []: b is a
-In []: b[0,0]=0; print a
+In []: b[0,0]=-1; print a
 In []: c = a.view()
 In []: c is a
 In []: c.base is a
@@ -642,7 +636,7 @@ In []: c.base is a
   \frametitle{Copies contd \ldots}
   \begin{lstlisting}
     In []: a = arange(1, 10, 2)
-    In []: b = a[array([0,2,3])]
+    In []: b = a[ [0,2,3] ]
     In []: b.flags.owndata
     In []: abool=a>5
     In []: c = a[abool]
@@ -686,33 +680,41 @@ array([[ 2.  , 1.25, 1.  , 1.25, 2.  ],
        [ 1.25, 0.5 , 0.25, 0.5 , 1.25],
        [ 2.  , 1.25, 1.  , 1.25, 2.  ]])
 \end{lstlisting}
+\inctime{10}
 \end{frame}
 
 
 \begin{frame}[fragile]
-  \frametitle{An exercise}
+  \frametitle{An exercise: plot the Mandelbrot set}
 
-Plot the mandelbrot set. 
+  \begin{itemize}
+      \item Consider points in the complex plane.  For each point, $c$,
+          calculate $z_{n+1} = z_n^2 + c$, with $z_0 = 0$.  
+          
+      \item Note that if $z_i > 2$ the solution will diverge.  
+          
+      \item We would like to plot the number of iterations a point
+          diverges in.
 
-Consider points in the complex plane.  For each point, $c$, calculate
-$z_{n+1} = z_n^2 + c$, with $z_0 = 0$.  Note that if $z_i > 2$ the
-solution will diverge.  We would like to plot the number of iterations a
-point diverges in.
+      \item We are given \typ{w, h} as width and height of image.
 
-Given \typ{w, h} as width and height of image.  Region of interest is
-[-2, -1.4] to [0.8, 1.4].
+      \item Region of interest is [-2, -1.4] to [0.8, 1.4].
+
+  \end{itemize}
+
+
 
 %x, y = mgrid[ -2:0.8:w*1j, -1.4:1.4:h*1j ]
 
 \end{frame}
 
-\begin{frame}[fragile,allowframebreaks]
+\begin{frame}[fragile]
     \small
     \vspace*{-0.25in}
   \frametitle{Naive solution}
   \begin{lstlisting}
 def mandel_py(h, w, maxit=20):
-    """Returns a numpy array image of the Mandelbrot set."""
+    """Returns the Mandelbrot set."""
     x, y = np.ogrid[-2:0.8:w*1j, -1.4:1.4:h*1j]
     c = x+y*1j
     output = np.zeros((w, h), dtype=int) + maxit
@@ -722,19 +724,19 @@ def mandel_py(h, w, maxit=20):
             c0 = c[i,j]
             for k in xrange(maxit):
                 z = z**2 + c0
-                if z*np.conj(z) > 4.0:
+                if z*z.conjugate() > 4.0:
                     output[i, j] = k
                     break
     return output.T
   \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile,allowframebreaks]
+\begin{frame}[fragile]
   \frametitle{Numpy solution}
   \small
   \begin{lstlisting}
 def mandel_np(h, w, maxit=20):
-    """Returns a numpy array image of the Mandelbrot set."""
+    """Returns the Mandelbrot set."""
     x, y = np.ogrid[-2:0.8:w*1j, -1.4:1.4:h*1j]
     c = x+y*1j
     z = c
@@ -752,8 +754,8 @@ def mandel_np(h, w, maxit=20):
 \begin{frame}[fragile,plain]
     \frametitle{The result}
 \begin{lstlisting}
-In []: from mandel_cy import mandel_cy
-In []: o = mandel_cy(1024,1024)
+In []: from mandel import mandel_np
+In []: o = mandel_np(1024,1024)
 In []: imshow(o)
 \end{lstlisting}
 \vspace*{-1em}
@@ -765,13 +767,15 @@ In []: imshow(o)
 \begin{frame}[fragile]
     \frametitle{Timing}
     \begin{lstlisting}
-In []: %timeit o = mandel_py(256, 256)
-1 loops, best of 3: 2.47 s per loop
+In []: %timeit mandel_py(256, 256)
+1 loops, best of 3: 2.96 s per loop
 
-In []: %timeit o = mandel_np(256,256)
-10 loops, best of 3: 48.1 ms per loop
+In []: %timeit mandel_np(256,256)
+10 loops, best of 3: 42.6 ms per loop
     \end{lstlisting}
-A whopping 780x speedup!
+A 70x speedup!
+
+\inctime{10}
 \end{frame}
 
 
@@ -820,7 +824,10 @@ In []: csv2rec?
 \begin{frame}[fragile]
     \frametitle{\typ{csv2rec} example data}
     \begin{itemize}
-        \item Describe the data here
+        \item \typ{data.csv}
+        \item First column ``x''
+        \item Second column ``y''
+        \item Third column ``temp''
     \end{itemize}
 \end{frame}
 
@@ -829,12 +836,13 @@ In []: csv2rec?
     \begin{lstlisting}
 In []: data = csv2rec('data.csv')
 In []: scatter(data['x'], data['y'], 
-  ...:         c=data['value'])
+  ...:         c=data['temp'])
     \end{lstlisting}
+    \inctime{5}
 \end{frame}
 
 
-\section{SciPy}
+\section{SciPy and Matplotlib}
 \begin{frame}[plain]
   \frametitle{SciPy}
   \begin{itemize}
@@ -923,6 +931,7 @@ ylabel('Undamped')
   \pgfimage[height=1.75in, interpolate=true]{../MEDIA/python/contour}  
   \pgfimage[height=2.75in, interpolate=true]{../MEDIA/python/scipy_screenie}  
   \end{center}
+  \inctime{5}
 \end{frame}
 
 \end{document}

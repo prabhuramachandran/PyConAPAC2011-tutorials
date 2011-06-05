@@ -6,6 +6,7 @@ from enthought.traits.api import (HasTraits, Float, Range, Enum,
 from enthought.traits.ui.api import (View, Item, Group)
 
 from enthought.chaco.api import ArrayPlotData, Plot, jet
+from enthought.chaco.tools.api import BetterSelectingZoom
 from enthought.enable.component_editor import ComponentEditor
 
 
@@ -73,6 +74,7 @@ class Mandelbrot(HasTraits):
             plot = Plot(plotdata)
             # Create a line plot in the Plot
             plot.img_plot("img", colormap=jet)
+            plot.tools.append(BetterSelectingZoom(plot))
             self.plot = plot
         else:
             self.plotdata.set_data('img', res)
