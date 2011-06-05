@@ -27,7 +27,7 @@ def mandel_py(h, w, maxit=20):
             c0 = c[i,j]
             for k in xrange(maxit):
                 z = z**2 + c0
-                if z*np.conj(z) > 4.0:
+                if z*z.conjugate() > 4.0:
                     output[i, j] = k
                     break
     return output.T
