@@ -201,14 +201,247 @@ In []: moe.configure_traits() # Visualization
 \end{frame}
 
 \begin{frame}
-  \frametitle{A UI for the Mandelbrot set}
+  \frametitle{Simple UI for the Mandelbrot set}
 \begin{center}
     Goal: Build a simple UI for the Mandelbrot set example.
 \end{center}
 \end{frame}
 
+\begin{frame}
+    \frametitle{Requirements}
 
+    \begin{itemize}
+        \item Change the width and height
+        \item Change the region
+        \item Time the execution
+    \end{itemize}
+\end{frame}
 
+\begin{frame}[fragile]
+  \frametitle{Changes to the code}
+  \alert{This is only so we can change the region}
+  \begin{lstlisting}
+def mandel_np(h, w, xmin=-2, xmax=0.8, 
+              ymin=-1.4, ymax=1.4, 
+              maxit=20):
+    """Returns the 'Mandelbrot set'."""
+    x, y = np.ogrid[xmin:xmax:w*1j, 
+                    ymin:ymax:h*1j]
+    # ... 
+  \end{lstlisting}
+
+All the implementations are in \typ{mbrt.pyx}
+\end{frame}
+
+\begin{frame}
+    \frametitle{The steps involved}
+    \begin{enumerate}
+        \item A simple class (with traits) to manage the parameters we want
+        \item Suitable callbacks to implement functionality
+        \item Plot results
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+  \frametitle{The code: part 1}
+\small
+\begin{lstlisting}
+
+import time # for timing
+
+import mbrt # our mandelbrot module
+
+# Various trait types for the class.
+from enthought.traits.api import (HasTraits, 
+  Float, Range, Enum, Array, on_trait_change,
+  Instance)
+
+class Mandelbrot(HasTraits):
+    # Traits ...
+
+    # Methods ...
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+  \frametitle{The code: part 2}
+\small
+\begin{lstlisting}
+class Mandelbrot(HasTraits):
+    method = Enum('cython', 'python', 'numpy', 
+                 desc='implementation to use')
+\end{lstlisting}
+\pause
+\vspace*{-1em}
+\begin{lstlisting}
+    width = Range(10, 5000, 256, desc='width...')
+\end{lstlisting}
+\pause
+\vspace*{-1em}
+\begin{lstlisting}
+    height = Range(10, 5000, 256, desc='...')
+    iterations = Range(2, 100, 20)
+    xmin = Range(-4., 4., -2.)
+    xmax = Range(-4., 4., 0.8)
+    ymin = Range(-4., 4., -1.4, desc='...')
+    ymax = Range(-4., 4., 1.4, desc='...')
+
+    runtime = Float(0.0, desc='execution time')
+    # The result of the computation.
+    result = Array()
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+  \frametitle{The code: part 3}
+\small
+\begin{lstlisting}
+class Mandelbrot(HasTraits):
+    # Traits ...
+    @on_trait_change('method, width, height, '\
+                     'xmin, xmax, ymin, '\
+                     'ymax, iterations')
+    def compute(self):
+        """Calculate the Mandelbrot set"""
+        methods = {'python': mbrt.mandel_py, 
+                   'cython': mbrt.mandel_cy,
+                   'numpy': mbrt.mandel_np}
+        mandel = methods[self.method]
+        t1 = time.time()
+        result = mandel(self.height, ...)
+        t2 = time.time()
+        # Set the results.
+        self.runtime = t2 - t1
+        self.result = result
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+  \frametitle{The code: part 4}
+\small
+\begin{lstlisting}
+if __name__ == '__main__':
+    m = Mandelbrot()
+    m.compute() # Compute it once.
+    m.configure_traits()
+# EOF
+$ python mandel_ui0.py
+  \end{lstlisting}
+  \begin{center}
+    \pgfimage[width=1.5in]{data/mandel_ui0}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Issues}
+    \begin{enumerate}
+    \item Relatively simple
+    \item Works
+    \item Doesn't look great
+    \end{enumerate}
+    \begin{block}{What we need}
+        \begin{enumerate}
+            \item Prettier layout
+            \item The actual result
+        \end{enumerate}
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+    \frametitle{Fixing the layout: \typ{Views}}
+    \vspace*{-1ex}
+\small
+\begin{lstlisting}
+from enthought.traits.ui.api import (View,
+  Item, Group)
+\end{lstlisting}
+\pause
+\begin{lstlisting}
+class Mandelbrot(HasTraits):
+    # Traits ...
+    view = View(Group(
+                  Item(name='method'),
+                  Item(name='runtime'),
+                  Item(name='width'),
+                  Item(name='height'),
+                  Item(name='xmin'),
+                  Item(name='xmax'),
+                  Item(name='ymin'),
+                  Item(name='ymax'),
+                  Item(name='iterations'),
+                  )
+                )
+    # Methods ...
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Plotting: using Chaco}
+    \begin{itemize}
+        \item Chaco is very powerful
+        \item Could use Matplotlib but is a bit more work
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+  \frametitle{The code: chaco plotting}
+\small
+\begin{lstlisting}
+from enthought.chaco.api import \
+    ArrayPlotData, Plot, jet
+from enthought.enable.component_editor \
+    import ComponentEditor
+    
+class Mandelbrot(HasTraits):
+    # ... 
+    plotdata = Instance(ArrayPlotData)
+    plot = Instance(Plot)
+    view = View(Group(...
+                  Item(name='iterations'),
+                  Item(name='plot',
+                       editor=ComponentEditor(), show_label=False)
+                  ),
+                  width=500, height=500,
+                  resizable=True,
+                  title="Mandelbrot set")
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+  \frametitle{The code: chaco plotting (ctd.)}
+\small
+\begin{lstlisting}
+class Mandelbrot(HasTraits):
+    # ... 
+    def _result_changed(self, res):
+        if self.plot is None:
+            plotdata = ArrayPlotData(img = res)
+            self.plotdata = plotdata
+            # Create a Plot and associate it 
+            # with the PlotData
+            plot = Plot(plotdata)
+            # Create an image plot in the Plot
+            plot.img_plot("img", colormap=jet)
+            self.plot = plot
+        else:
+            self.plotdata.set_data('img', res)
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain]
+  \frametitle{The result}
+  \begin{center}
+    \pgfimage[width=2.5in]{data/mandel_ui}
+  \end{center}
+\end{frame}
+
+\begin{frame}[plain]
+  %\frametitle{A review of the code}
+  \begin{center}
+      \Huge
+      \myemph{A Review of the Code}
+  \end{center}
+\end{frame}
 
 \section{Mayavi}
 
@@ -379,7 +612,6 @@ In []: z = sin(x*x + y*y)
 
 \emphbar{\PythonCode{obj = mlab.quiver3d(x, y, z, u, v, w)}}
 
-\inctime{30}
 \end{frame}
 
 \begin{frame}[plain, fragile]
@@ -441,8 +673,6 @@ mlab.show()
 
     \emphbar{\alert{Good} visualization involves work}
  
-    \inctime{10}
-
 \end{frame}
 
 \begin{frame}[plain]

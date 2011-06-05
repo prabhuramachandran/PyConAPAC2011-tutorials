@@ -10,5 +10,6 @@ setup(
                    Extension("quad3", ["quad3.pyx"]),
                    Extension("quad4", ["quad4.pyx"]),
                    Extension("mandel_cy", ["mandel_cy.pyx"]),
+                   Extension("mbrt", ["mbrt.pyx"]),
                   ]
 )
