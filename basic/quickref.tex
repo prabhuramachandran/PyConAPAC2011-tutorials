@@ -34,9 +34,9 @@
 \begin{document}
 \begin{multicols*}{3}
 \begin{center}
-\textbf{Python for Scientific Computing}\\
+\textbf{Scientific Computing with Python}\\
 \textbf{Quick Reference}\\
-\textbf{FIXME:} fix header and date?
+\textbf{PyCon Asia-Pacific}\\
 \end{center}
 \vspace{-2ex}
 
@@ -155,9 +155,9 @@ Bytes per element: \typ{arr.itemsize}
 \skipin similarly \lstinline|zeros_like, empty_like| \\
 {\ex \lstinline|A = ones((3,2))|} array of ones of shape (3,2)\\
 \skipin similarly \lstinline|zeros, empty|\\
-{\ex \lstinline|I = identity(3)|} identity matrix of size 3x3
-
-\textbf{FIXME:} Add mgrid ogrid?
+{\ex \lstinline|I = identity(3)|} identity matrix of size 3x3\\
+{\ex \lstinline|x, y = mgrid[0:3, 0:5]|} mesh-grid of size 3x5\\
+{\ex \lstinline|x, y = ogrid[0:3, 0:5]|} open mesh-grid of size 3x5
 
 %*********************************************
 \hr\textbf{Accessing \& Changing elements}
@@ -187,7 +187,15 @@ For matrices A and B of equal shapes:\\
 {\ex \lstinline|norm(A)|} norm\\
 {\ex \lstinline|svd(A)|} singular value decomposition
 
-\textbf{FIXME:} Add lstsq?
+%*********************************************
+\hr\textbf{Least Square Fit}
+
+To get the least square fit of $L$ vs. $tsq$:\\
+{\ex \lstinline|A = array([L, ones_like(L)])|}\\
+{\ex \lstinline|A = A.T|} vandermonde matrix\\
+{\ex \lstinline|result = lstsq(A, tsq)|}\\
+{\ex \lstinline|coef = result[0]|} coefficients
+{\ex \lstinline|Tline = coef[0]*L + coef[1]|}
 
 %*********************************************
 \hr\textbf{Solving Linear Equations}
@@ -273,11 +281,16 @@ def f(y, t):
 {\ex \typ{mlab.points3d(x, y, z)}}  Plot points in 3D\\
 {\ex \typ{mlab.contour3d(x*x*0.5 + y*y + z*z*2)}}  3D contours\\
 {\ex \typ{gcf}} get current figure\\
-{\ex \typ{savefig}} {\ex \typ{figure}}\\
-{\ex \typ{axes}} {\ex \typ{outline}}\\
-{\ex \typ{title}} {\ex \typ{xlabel, ylabel, zlabel}}\\
-{\ex \typ{colorbar}} {\ex \typ{scalarbar}} {\ex \typ{vectorbar}}\\
-{\ex \typ{show}} 
+{\ex \typ{savefig}} save current figure\\
+{\ex \typ{figure}} switch figure or new figure\\
+{\ex \typ{axes}} create axes\\
+{\ex \typ{outline}} create outline\\
+{\ex \typ{title}} add title\\
+{\ex \typ{xlabel, ylabel, zlabel}} labels\\
+{\ex \typ{colorbar}} Add colorbar\\
+{\ex \typ{scalarbar}} Add colorbar for scalar color mapping\\
+{\ex \typ{vectorbar}} Add colorbar for vector color mapping\\
+{\ex \typ{show}} show figure (standalone scripts)
 
 \end{multicols*}
 
