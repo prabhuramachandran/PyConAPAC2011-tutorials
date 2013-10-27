@@ -81,9 +81,8 @@ Python}
 \author[Prabhu] {FOSSEE}
 
 \institute[FOSSEE -- IITB] {Department of Aerospace Engineering\\IIT Bombay}
-\date[] {PyCon Asia-Pacific,\\
-Singapore\\
-June 9, 2011
+\date[] {IIRS, Dehradun\\
+Oct, 2013
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -652,8 +651,17 @@ In []: imshow(img)
     \frametitle{Record arrays}
     \begin{itemize}
         \item Numpy arrays
-        \item Allow field access 
+        \item Create custom data types
+        \item Consider: \\
+            \typ{[   (id0, x0), (id1, x1), ...]}
+        \item \typ{id}: int
+        \item \typ{x}: float
+
     \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Record arrays}
     \begin{lstlisting}
 In []: typ = [('id', int), ('x', float)]
 In []: rec = numpy.zeros(10, dtype=typ)
