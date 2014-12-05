@@ -14,8 +14,8 @@ class Mandelbrot(HasTraits):
     # Traits
     method = Enum('cython', 'python', 'numpy', 
                   desc='the implementation to call')
-    width = Range(10, 5000, 512, desc='the width of the image')
-    height = Range(10, 5000, 512, desc='the height of the image')
+    width = Range(10, 5000, 1024, desc='the width of the image')
+    height = Range(10, 5000, 1024, desc='the height of the image')
     runtime = Float(0.0, desc='the time for execution')
     iterations = Range(2, 100, 20, desc='maximum number of iterations')
 
