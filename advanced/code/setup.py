@@ -1,6 +1,13 @@
 from setuptools import setup
 from Cython.Distutils import build_ext
-from numpy.distutils.extension import Extension
+from numpy.distutils.extension import Extension as _Extension
+import numpy
+
+def Extension(*args, **kw):
+    inc = kw.get('include_dirs', [])
+    kw['include_dirs'] = inc + [numpy.get_include()]
+    return _Extension(*args, **kw)
+
 setup(
     cmdclass = {'build_ext': build_ext},
     ext_modules = [Extension("hello", ["hello.pyx"]),
