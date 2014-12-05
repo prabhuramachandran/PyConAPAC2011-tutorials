@@ -78,16 +78,15 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Title page
-\title[Mayavi and SciPy]{Introductory Scientific Computing with
+\title[Basic SciPy and Mayavi]{Introductory Scientific Computing with
 Python}
-\subtitle{Mayavi and SciPy}
+\subtitle{Basic SciPy and Mayavi}
 
 \author[Prabhu] {FOSSEE}
 
 \institute[FOSSEE -- IITB] {Department of Aerospace Engineering\\IIT Bombay}
-\date[] {PyCon Asia-Pacific,\\
-Singapore\\
-June 9, 2011
+\date[] {IIRS, Dehradun\\
+Oct, 2013
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -126,177 +125,6 @@ June 9, 2011
 \begin{frame}
   \maketitle
 \end{frame}
-
-%% \begin{frame}
-%%   \frametitle{Outline}
-%%   \tableofcontents
-%%   % You might wish to add the option [pausesections]
-%% \end{frame}
-
-\section{Basic Mayavi: \typ{mlab}}
-
-\begin{frame}[fragile]
-\frametitle{Basic 3D visualization}
-\begin{itemize}
-    \item Simple one liners for 3D visualization
-\end{itemize}
-  \begin{lstlisting}
-$ ipython --pylab --wthread
-# or
-$ ipython --pylab --q4thread
-  \end{lstlisting}
-\begin{itemize}
-    \item Must import mlab.
-\end{itemize}
-\begin{lstlisting}
-In []: from enthought.mayavi import mlab
-\end{lstlisting}
-Ready to go!
-\end{frame}
-
-\begin{frame}[fragile]
-    \frametitle{Simple examples}
-
-    \myemph{\Large Try these}
-
-    \begin{lstlisting}
-In []: mlab.test_<TAB>
-
-In []: mlab.test_points3d()
-In []: mlab.clf()
-In []: mlab.test_plot3d()
-In []: mlab.clf()
-In []: mlab.test_surf()
-In []: mlab.test_surf??
-    \end{lstlisting}
-Explore the UI.
-\end{frame}
-
-
-\begin{frame}[fragile]
-    \frametitle{\typ{mlab} plotting functions}
-    \begin{columns}
-        \column{0.25\textwidth}
-        \myemph{\Large 0D data}
-        \column{0.5\textwidth}
-    \pgfimage[width=2in]{../MEDIA/m2/mlab/points3d_ex}
-    \end{columns}
-
-    \begin{lstlisting}
-In []: t = linspace(0, 2*pi, 50)
-In []: u = cos(t) * pi
-In []: x, y, z = sin(u), cos(u), sin(t)
-    \end{lstlisting}
-    \emphbar{\PythonCode{In []: mlab.points3d(x, y, z)}}
-\end{frame}
-
-\begin{frame}[plain, fragile]
-    \frametitle{Changing how things look}
-
-    \begin{block}{Clearing the view}
-    \PythonCode{>>> mlab.clf()}
-    \end{block}
-
-    \pause
-
-    \begin{block}{IPython is your friend!}
-    \PythonCode{>>> mlab.points3d?}
-
-    \begin{itemize}
-
-        \item Extra argument: Scalars
-
-        \item Keyword arguments
-
-        \item UI
-    \end{itemize}
-    \end{block}
-\pause
-    \begin{lstlisting}
-In []: mlab.points3d(x, y, z, t, 
-                     scale_mode='none')
-    \end{lstlisting}
-
-\end{frame}
-
-
-
-\begin{frame}[fragile]
-  \begin{columns}
-        \column{0.25\textwidth}
-        \myemph{\Large 1D data}
-        \column{0.5\textwidth}
-        \pgfimage[width=2.5in]{../MEDIA/m2/mlab/plot3d_ex}
-  \end{columns}
-  \emphbar{\PythonCode{In []: mlab.plot3d(x, y, z, t)}}
-
-    Plots lines between the points
-    
-\end{frame}
-
-\begin{frame}[fragile]
-    \begin{columns}
-        \column{0.25\textwidth}
-        \myemph{\Large 2D data}
-        \column{0.5\textwidth}
-        \pgfimage[width=2in]{../MEDIA/m2/mlab/surf_ex}
-    \end{columns}            
-    \begin{lstlisting}
-In []: x, y = mgrid[-3:3:100j,-3:3:100j]
-In []: z = sin(x*x + y*y)
-    \end{lstlisting}
-
-    \emphbar{\PythonCode{In []: mlab.surf(x, y, z)}}
-
-    \alert{Assumes the points are rectilinear}
-
-\end{frame}
-
-
-\begin{frame}[plain, fragile]
-
-        \myemph{\Large 3D data}
-    \vspace*{0.25in}
-
-    \pgfimage[width=1.5in]{../MEDIA/m2/mlab/contour3d}\\
-    
-\begin{lstlisting}
-In []: x, y, z = ogrid[-5:5:64j, 
-  ...:                 -5:5:64j, 
-  ...:                 -5:5:64j]
-In []: mlab.contour3d(x*x*0.5 + y*y + 
-                   z*z*2)
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[plain]
-    {Other utility functions}
-    \begin{itemize}
-        \item \PythonCode{gcf}: get current figure
-            \pause
-        \item \PythonCode{savefig}, \PythonCode{figure}
-            \pause
-        \item \PythonCode{axes}, \PythonCode{outline}
-            \pause
-        \item \PythonCode{title}, \PythonCode{xlabel, ylabel, zlabel}
-            \pause
-        \item \PythonCode{colorbar}, \PythonCode{scalarbar},
-            \PythonCode{vectorbar}
-            \pause
-        \item \PythonCode{show}: Standalone mlab scripts
-            \pause
-        \item Others, see UG
-    \end{itemize}
-\end{frame}
-
-\begin{frame}
-    {Exploring the documentation}
-    \begin{center}
-    \pgfimage[width=4in]{../MEDIA/m2/m2_ug_doc}
-    \end{center}
-    \inctime{20}
-\end{frame}
-
 
 
 \section{Solving linear systems}
@@ -636,21 +464,178 @@ In []: plot(freq[:250],
   ...:      abs(fft(yc))[:250])
 \end{lstlisting}
 Only scratched the surface here \dots
+  \inctime{10}
 \end{frame}
+
+\section{Basic Mayavi: \typ{mlab}}
+
+\begin{frame}[fragile]
+\frametitle{Basic 3D visualization}
+\begin{itemize}
+    \item Simple one liners for 3D visualization
+    \item Must import mlab.
+\end{itemize}
+\begin{lstlisting}
+In []: from mayavi import mlab
+\end{lstlisting}
+Ready to go!
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Simple examples}
+
+    \myemph{\Large Try these}
+
+    \begin{lstlisting}
+In []: mlab.test_<TAB>
+
+In []: mlab.test_points3d()
+In []: mlab.clf()
+In []: mlab.test_plot3d()
+In []: mlab.clf()
+In []: mlab.test_surf()
+In []: mlab.test_surf??
+    \end{lstlisting}
+Explore the UI.
+\end{frame}
+
+
+\begin{frame}[fragile]
+    \frametitle{\typ{mlab} plotting functions}
+    \begin{columns}
+        \column{0.25\textwidth}
+        \myemph{\Large 0D data}
+        \column{0.5\textwidth}
+    \pgfimage[width=2in]{../MEDIA/m2/mlab/points3d_ex}
+    \end{columns}
+
+    \begin{lstlisting}
+In []: t = linspace(0, 2*pi, 50)
+In []: u = cos(t) * pi
+In []: x, y, z = sin(u), cos(u), sin(t)
+    \end{lstlisting}
+    \emphbar{\PythonCode{In []: mlab.points3d(x, y, z)}}
+\end{frame}
+
+\begin{frame}[plain, fragile]
+    \frametitle{Changing how things look}
+
+    \begin{block}{Clearing the view}
+    \PythonCode{>>> mlab.clf()}
+    \end{block}
+
+    \pause
+
+    \begin{block}{IPython is your friend!}
+    \PythonCode{>>> mlab.points3d?}
+
+    \begin{itemize}
+
+        \item Extra argument: Scalars
+
+        \item Keyword arguments
+
+        \item UI
+    \end{itemize}
+    \end{block}
+\pause
+    \begin{lstlisting}
+In []: mlab.points3d(x, y, z, t, 
+                     scale_mode='none')
+    \end{lstlisting}
+
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+  \begin{columns}
+        \column{0.25\textwidth}
+        \myemph{\Large 1D data}
+        \column{0.5\textwidth}
+        \pgfimage[width=2.5in]{../MEDIA/m2/mlab/plot3d_ex}
+  \end{columns}
+  \emphbar{\PythonCode{In []: mlab.plot3d(x, y, z, t)}}
+
+    Plots lines between the points
+    
+\end{frame}
+
+\begin{frame}[fragile]
+    \begin{columns}
+        \column{0.25\textwidth}
+        \myemph{\Large 2D data}
+        \column{0.5\textwidth}
+        \pgfimage[width=2in]{../MEDIA/m2/mlab/surf_ex}
+    \end{columns}            
+    \begin{lstlisting}
+In []: x, y = mgrid[-3:3:100j,-3:3:100j]
+In []: z = sin(x*x + y*y)
+    \end{lstlisting}
+
+    \emphbar{\PythonCode{In []: mlab.surf(x, y, z)}}
+
+    \alert{Assumes the points are rectilinear}
+
+\end{frame}
+
+
+\begin{frame}[plain, fragile]
+
+        \myemph{\Large 3D data}
+    \vspace*{0.25in}
+
+    \pgfimage[width=1.5in]{../MEDIA/m2/mlab/contour3d}\\
+    
+\begin{lstlisting}
+In []: x, y, z = ogrid[-5:5:64j, 
+  ...:                 -5:5:64j, 
+  ...:                 -5:5:64j]
+In []: mlab.contour3d(x*x*0.5 + y*y + 
+                   z*z*2)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain]
+    {Other utility functions}
+    \begin{itemize}
+        \item \PythonCode{gcf}: get current figure
+            \pause
+        \item \PythonCode{savefig}, \PythonCode{figure}
+            \pause
+        \item \PythonCode{axes}, \PythonCode{outline}
+            \pause
+        \item \PythonCode{title}, \PythonCode{xlabel, ylabel, zlabel}
+            \pause
+        \item \PythonCode{colorbar}, \PythonCode{scalarbar},
+            \PythonCode{vectorbar}
+            \pause
+        \item \PythonCode{show}: Standalone mlab scripts
+            \pause
+        \item Others, see UG
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    {Exploring the documentation}
+    \begin{center}
+    \pgfimage[width=4in]{../MEDIA/m2/m2_ug_doc}
+    \end{center}
+    \inctime{20}
+\end{frame}
+
 
 
 \begin{frame}
   \frametitle{Things we have learned}
   \begin{itemize}
-      \item Simple 3D plotting
   \item Solving Linear Equations
   \item Defining Functions
   \item Finding Roots
   \item Solving ODEs
-  \item Random number generation
   \item FFTs and basic signal processing
+  \item Basic 3D visualization with Mayavi
   \end{itemize}
-  \inctime{10}
 \end{frame}
 
 

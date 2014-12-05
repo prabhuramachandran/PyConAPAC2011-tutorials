@@ -82,9 +82,8 @@ Python}
 \author[Prabhu] {FOSSEE}
 
 \institute[FOSSEE -- IITB] {Department of Aerospace Engineering\\IIT Bombay}
-\date[] {PyCon Asia-Pacific,\\
-Singapore\\
-June 9, 2011
+\date[] {IIRS, Dehradun\\
+Oct, 2013
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -137,9 +136,9 @@ June 9, 2011
 Do we plot analytical functions or experimental data?
 \begin{small}
 \begin{lstlisting}
-In []: time = [0, 1, 2, 3]
+In []: time = [0., 1., 2, 3]
 
-In []: distance = [7, 11, 15, 19]
+In []: distance = [7., 11, 15, 19]
 
 In []: plot(time,distance)
 Out[]: [<matplotlib.lines.Line2D object at 0xa73aa8c>]
@@ -433,15 +432,37 @@ In []: tsq = t*t
 \noindent Lets define a function for the list
 \begin{lstlisting}
 In []: def sqr(arr):
-  ...:     ret = []
+  ...:     result = []
   ...:     for x in arr:
-  ...:         ret.append(x*x)
-  ...:     return ret
+  ...:         result.append(x*x)
+  ...:     return result
   ...: 
 
 In []: tsq = sqr(t)
 
 \end{lstlisting}  %$
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Aside: Defining functions}
+  \begin{itemize}
+  \item Consider the function \texttt{f(x) = x\textasciicircum{}2}
+  \item Let's write a Python function, equivalent to this
+  \end{itemize}
+  \begin{lstlisting}
+   In[]: def f(x):
+   ....:     return x*x
+   ....:
+
+   In[]: f(1)
+   In[]: f(2)
+  \end{lstlisting}
+  \begin{itemize}
+  \item \texttt{def} is a keyword  
+  \item \texttt{f} is the name of the function 
+  \item \texttt{x} the parameter of the function
+  \item \texttt{return} is a keyword
+  \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -480,7 +501,7 @@ In []: %timeit?
     \item Efficient, powerful array type
     \item Abstracts out standard operations on arrays
     \item Convenience functions
-    \item \typ{ipython --pylab} imports part of numpy
+    \item \typ{ipython -pylab} imports part of numpy
     \item Without the Pylab mode do:
     \end{itemize}
     \begin{lstlisting}
@@ -501,7 +522,7 @@ In []: from numpy import *
   \item \alert{Note:} \typ{shape} can change so long as the \typ{size}
       is constant
   \item Indices start from 0
-  \item Negative indices do the right thing.
+  \item Negative indices work like lists
   \end{itemize}
 \end{frame}
 
@@ -707,6 +728,14 @@ Out[]: (90,)
 \end{frame}
 
 \begin{frame}[fragile]
+  \frametitle{Learn more}
+    \begin{itemize}
+        \item \url{http://wiki.scipy.org/Tentative_NumPy_Tutorial}
+        \item \url{http://numpy.org}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
   \frametitle{Recap}
   \begin{itemize}
       \item Basic concepts: creation, access, operations
@@ -728,7 +757,7 @@ In []: cat pendulum.txt
 1.1000e-01 6.9497e-01
 1.2000e-01 7.4252e-01
 1.3000e-01 7.5360e-01
-\end{lstlisting}  %$
+\end{lstlisting}
 \ldots
 \end{frame}
 

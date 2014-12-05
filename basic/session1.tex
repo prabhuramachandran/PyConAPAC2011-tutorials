@@ -75,9 +75,8 @@ Python}
 \author[FOSSEE group] {FOSSEE}
 
 \institute[IIT Bombay] {Department of Aerospace Engineering\\IIT Bombay}
-\date[] {PyCon Asia-Pacific,\\
-Singapore\\
-June 9, 2011
+\date[] {IIRS, Dehradun\\
+Oct, 2013
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -141,7 +140,7 @@ June 9, 2011
 \frametitle{Checklist}
   \begin{enumerate}
     \item IPython
-    \item Editor - we recommend \alert{scite}
+    \item Editor - we recommend \alert{Canopy}
     \item Data files: 
       \begin{itemize}
       \item \typ{pendulum.txt}
@@ -193,16 +192,29 @@ June 9, 2011
 \section{Starting up IPython}
 \begin{frame}[fragile]
 \frametitle{Starting up \ldots}
-\begin{block}{}
+\begin{block}{Enthought Canopy menu}
+\begin{itemize}
+    \item PyLab
+    \item Canopy command prompt
+\end{itemize}
+\end{block}
+
+\begin{block}{Terminal}
 \begin{lstlisting}
-  $ ipython --pylab
+  $ ipython -pylab
 \end{lstlisting} %$
 \end{block}
-\begin{lstlisting}     
+
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Running IPython}
+\begin{lstlisting}
   In []: print "Hello, World!"
   Hello, World!
 \end{lstlisting}
-Exiting
+
+Exiting on the terminal
 \begin{lstlisting}
   In []: ^D(Ctrl-D)
   Do you really want to exit([y]/n)? y
@@ -514,6 +526,7 @@ In []: plot??
 \end{lstlisting}
     to see the source code for \typ{plot}
 
+\item Note: exit pager with ``q'' or ``ESC''
 \end{itemize}
 
 \end{frame}
@@ -571,6 +584,7 @@ This displays all the commands typed in so far aka Command History.
 \begin{block}{Careful about errors!}
   \kwrd{\%hist} will contain the errors as well.\\
 \end{block}
+\pause
 \begin{block}{Magic Commands?}
   Magic commands are commands provided by IPython to make our life easier.
 \end{block}
@@ -609,6 +623,7 @@ To avoid this, run using \alert{\typ{\%run -i four_plot.py}}\\
   \end{center}
 \end{frame}
 
+
 \begin{frame}[fragile]
   \frametitle{What did we learn?}
   \begin{itemize}
@@ -624,6 +639,32 @@ To avoid this, run using \alert{\typ{\%run -i four_plot.py}}\\
   \end{itemize}
   \inctime{30}
 \end{frame}
+
+\begin{frame}
+  \frametitle{Next: using Canopy}
+  \begin{itemize}
+      \item Much easier
+      \item Write code in the editor
+      \item Save
+      \item Run selection: Ctrl-Shift-R
+      \item Run code: Ctrl-R
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Useful features}
+  \begin{itemize}
+      \item Tab completion
+      \item Warnings
+      \item Documentation
+      \item Copy/execute code from docs
+      \item Support for notebooks
+      \item Restart kernels
+      \item Package manager
+  \end{itemize}
+\end{frame}
+
+
 \end{document}
 
 %% Questions for Quiz %%
